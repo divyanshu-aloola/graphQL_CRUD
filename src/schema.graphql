@@ -1,0 +1,76 @@
+# ------------ Type definitions (schema)-------------------->
+#  type defs can have the following dataTypes a.k.a
+#  1. Scalar Types - Int, Float, Boolean, String, ID
+#  2. Custom types - User, Place etc
+
+type Query {
+  creator: User!
+  post: Post!
+  users(query: String): [User!]!
+  posts(query: String): [Post!]!
+  comments: [Comment!]!
+}
+type Mutation {
+  createUser(data: createUserInput!): User!
+  deleteUser(id: ID!): User!
+  updateUser(id: ID!, data: updateUserInput): User!
+  createPost(data: createPostInput!): Post!
+  deletePost(id: ID!): Post!
+  updatePost(id: ID!, data: updatePostInput): Post!
+  createComment(data: createCommentInput!): Comment!
+  deleteComment(id: ID!): Comment!
+  updateComment(id: ID!, data: updateCommentInput!): Comment!
+}
+
+input createUserInput {
+  name: String!
+  email: String!
+  age: Int!
+}
+input updateUserInput {
+  name: String
+  email: String
+  age: Int
+}
+input createPostInput {
+  caption: String!
+  body: String!
+  published: Boolean!
+  author: ID!
+}
+input updatePostInput {
+  caption: String
+  body: String
+  published: Boolean
+}
+input createCommentInput {
+  text: String!
+  author: ID!
+  post: ID!
+}
+input updateCommentInput {
+  text: String!
+}
+
+type User {
+  id: ID!
+  name: String!
+  age: Int
+  email: String!
+  user_posts: [Post!]!
+  user_comments: [Comment!]!
+}
+type Post {
+  id: ID!
+  caption: String!
+  body: String!
+  published: Boolean!
+  author: User!
+  post_comments: [Comment!]!
+}
+type Comment {
+  id: ID!
+  text: String!
+  author: User!
+  post: Post!
+}
